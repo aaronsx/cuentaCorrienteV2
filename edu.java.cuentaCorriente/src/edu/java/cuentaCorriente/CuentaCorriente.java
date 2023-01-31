@@ -38,7 +38,7 @@ public class CuentaCorriente {
 	private String dni;
 	private String nombreTitular;
 	private double saldo;
-	
+	private int contador = 0;
 	//Getters y Setters
 	/*
 	 * Se utilizar para que software externo a la clase pueda 
@@ -71,6 +71,8 @@ public class CuentaCorriente {
 	}
 	
 	//Métodos
+	
+	//Crear una cuenta
 	public CuentaCorriente crearCuenta () {
 		
 		System.out.println("CREAR CUENTA: ");
@@ -94,42 +96,107 @@ public class CuentaCorriente {
 		/*CuentaCorriente cccInicializado = new CuentaCorriente(opcionEntradaDni, opcionEntradaNombreTitular, 0);
 		return cccInicializado;*/
 	}
-	
+	//Ingresar dinero a la cuenta
 	public List<CuentaCorriente> ingresoCuenta(List<CuentaCorriente> bd) {
 		System.out.println("INGRESO CUENTA: ");
 		//pedir dni
 		Scanner entradaDni = new Scanner(System.in);
 		System.out.println("Indique dni de cuenta: ");
 		String opcionEntradaDni = entradaDni.next();
-		//buscar la cuenta
-		int contador = 0;
-		boolean esEncontrado = false;
-		for(CuentaCorriente cuenta: bd) {			
-			String dniBd = cuenta.getDni();
-			if(dniBd.equals(opcionEntradaDni)) {
-				esEncontrado = true;
-				break;
-			}
-			contador++;			
-		}		
+		
+			
 
-		if(esEncontrado) {
+		if(buscarcuenta(opcionEntradaDni,bd)) 
+		{
 			System.out.println("Indique saldo a ingresar: ");
 			Scanner entradaIngreso = new Scanner(System.in);
 			double ingreso = entradaIngreso.nextDouble();
 			double saldoActual = bd.get(contador).getSaldo();
 			bd.get(contador).setSaldo(saldoActual+ingreso);
 			double saldoNuevo = saldoActual+ingreso;
-			System.out.println("Saldo anterior: "+saldoActual+"Saldo nuevo: "+ingreso);
-		}else {
+			System.out.println("Saldo anterior: "+saldoActual+"Saldo nuevo: "+saldoNuevo);
+			return bd;
+		}
+		else 
+		{
+			System.out.println("No existe cuenta para el dni indicaco: "+opcionEntradaDni);
+			return bd;
+		}
+	}
+	//Mostrar Cuenta
+	public void mostrarCuentasUsuario(List<CuentaCorriente> bd)
+	{
+		System.out.println("MOSTRAR CUENTA: ");
+		//pedir dni
+		Scanner entradaDni = new Scanner(System.in);
+		System.out.println("Indique dni de cuenta: ");
+		String opcionEntradaDni = entradaDni.next();
+		//buscar la cuenta
+			
+
+		if(buscarcuenta(opcionEntradaDni,bd)) 
+		{
+			System.out.println("Informacion del clienta: ");
+			double saldoActual = bd.get(contador).getSaldo();
+			String nombre=bd.get(contador).getNombreTitular();
+			System.out.println("Dni: "+opcionEntradaDni+" Nombre: "+nombre+" Salsdo: "+saldoActual);
+		}
+		else 
+		{
+			System.out.println("No existe cuenta para el dni indicaco: "+opcionEntradaDni);
+			
+		}
+		
+	}
+	public List<CuentaCorriente> retiroCuenta(List<CuentaCorriente> bd) 
+	{
+		System.out.println("Retirar CUENTA: ");
+		//pedir dni
+		Scanner entradaDni = new Scanner(System.in);
+		System.out.println("Indique dni de cuenta: ");
+		String opcionEntradaDni = entradaDni.next();
+		
+			
+
+		if(buscarcuenta(opcionEntradaDni,bd)) 
+		{
+			System.out.println("Indique saldo a retirar: ");
+			Scanner entradaRetiro = new Scanner(System.in);
+			double retirar = entradaRetiro.nextDouble();
+			double saldoActual = bd.get(contador).getSaldo();
+			double saldoNuevo = saldoActual-retirar;
+			if(saldoNuevo>=0)
+			{
+				bd.get(contador).setSaldo(saldoNuevo);
+			}
+			else
+			{
+				System.out.println("El salo que quieres retirar es de "+retirar+" el inferior al que tienes en la cuenta [Acualmente tienes: "+saldoActual+" ]");
+			}
+			
+			
+			System.out.println("Saldo anterior: "+saldoActual+"Saldo nuevo: "+saldoNuevo);
+			
+		}
+		else 
+		{
 			System.out.println("No existe cuenta para el dni indicaco: "+opcionEntradaDni);
 			return bd;
 		}
 		return bd;
 	}
-	
-	public ArrayList<CuentaCorriente> mostrarCuentasUsuario(String dniUsuario){
-		return null;		
+	//buscar la cuenta
+	public boolean buscarcuenta(String dniUsuario,List<CuentaCorriente> bd)
+	{
+		contador=0;
+		for(CuentaCorriente cuenta: bd) {			
+			String dniBd = cuenta.getDni();
+			if(dniBd.equals(dniUsuario)) 
+			return true;
+			
+			contador++;			
+		}	
+		return false;
 	}
 	
 	
