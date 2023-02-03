@@ -112,9 +112,9 @@ public class CuentaCorriente {
 			Scanner entradaIngreso = new Scanner(System.in);
 			double ingreso = entradaIngreso.nextDouble();
 			double saldoActual = bd.get(contador).getSaldo();
-			bd.get(contador).setSaldo(saldoActual+ingreso);
 			double saldoNuevo = saldoActual+ingreso;
-			System.out.println("Saldo anterior: "+saldoActual+"Saldo nuevo: "+saldoNuevo);
+			bd.get(contador).setSaldo(saldoNuevo);
+			System.out.println("Saldo anterior: "+saldoActual+" Saldo nuevo: "+saldoNuevo);
 			return bd;
 		}
 		else 
