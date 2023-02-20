@@ -175,13 +175,13 @@ public class CuentaCorriente {
 			}
 			
 			
-			System.out.println("Saldo anterior: "+saldoActual+"Saldo nuevo: "+saldoNuevo);
+			System.out.println("Saldo anterior: "+saldoActual+" Saldo nuevo: "+saldoNuevo);
 			
 		}
 		else 
 		{
 			System.out.println("No existe cuenta para el dni indicaco: "+opcionEntradaDni);
-			return bd;
+
 		}
 		return bd;
 	}
@@ -195,7 +195,8 @@ public class CuentaCorriente {
 			return true;
 			
 			contador++;			
-		}	
+		}
+		
 		return false;
 	}
 	
